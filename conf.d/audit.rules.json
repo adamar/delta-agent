@@ -1,0 +1,9 @@
+{
+    "delete": true,
+    "enable": "1",
+    "buffer": "16348",
+    "rate": "500",
+	"strict_path_check": false,
+    "file_rules": [],
+    "syscall_rules": []
+}
