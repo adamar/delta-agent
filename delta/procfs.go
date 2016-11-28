@@ -129,7 +129,12 @@ func readFD(fileDesc string) (string, string) {
 	// Read linked File descriptors
 	// to get more info on the type
 	//
-	link, _ := os.Readlink(fileDesc)
+	link, err := os.Readlink(fileDesc)
+
+	if err != nil {
+		log.Println(err.Error())
+		return "", ""
+	}
 
 	typ := linkType(link)
 
@@ -141,9 +146,6 @@ func readFD(fileDesc string) (string, string) {
 func linkType(fileDesc string) string {
 
 	//TODO - return with a more appropriate type
-
-	log.Println(fileDesc)
-
 	if strings.HasPrefix(fileDesc, "socket") {
 		return "socket"
 	}
