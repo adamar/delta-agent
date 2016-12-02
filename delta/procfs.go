@@ -4,16 +4,14 @@ import (
 	"fmt"
 	//"io/ioutil"
 	//"syscall"
-	"path/filepath"
-	"os"
 	"log"
-	"time"
+	"os"
+	"path/filepath"
 	"strings"
-	//"strconv"
+	"time"
+	"strconv"
+	"github.com/shirou/gopsutil/process"
 )
-
-
-
 
 func StartProcFSEngine() {
 
@@ -21,52 +19,51 @@ func StartProcFSEngine() {
 	// before monitoring begins
 	//
 	time.Sleep(2 * time.Second)
-	
+
 	existing := []string{}
 	latest := []string{}
 
-    for {
+	for {
 
-    	latest, _ = filepath.Glob("/proc/[0-9]*/fd/[0-9]*")
+		latest, _ = filepath.Glob("/proc/[0-9]*/fd/[0-9]*")
 
-    	// Check if this is the first check
-    	// if so set the previous FD list
-    	// to match the current list
-    	//
-    	if (len(existing) == 0) {
-
-        	existing = latest
-
-    	}
-
-
-    	// Convert the FD Glob to a String for comparison
-    	// some bad assumptions live here
-    	//
-    	if (fmt.Sprintf("%v", existing) != fmt.Sprintf("%v", latest)) {
-
-		//pid := strconv.Itoa(os.Getpid())
-
-		ts := GenTimeStamp()
-
-		// Find FDs added and removed
+		// Check if this is the first check
+		// if so set the previous FD list
+		// to match the current list
 		//
-        	added, removed := differ(existing, latest)
+		if len(existing) == 0 {
 
-        	for _, a := range added {
-			collectData(a, ts, "FD_OPEN")
-        	}
-        	for _, r := range removed {
-			collectData(r, ts, "FD_CLOSE")
-        	}
+			existing = latest
 
-        	existing = latest
+		}
 
-    	}
+		// Convert the FD Glob to a String for comparison
+		// some bad assumptions live here
+		//
+		if fmt.Sprintf("%v", existing) != fmt.Sprintf("%v", latest) {
 
-    	time.Sleep(100 * time.Millisecond)
+			//pid := strconv.Itoa(os.Getpid())
 
-    }
+			ts := GenTimeStamp()
+
+			// Find FDs added and removed
+			//
+			added, removed := differ(existing, latest)
+
+			for _, a := range added {
+				collectData(a, ts, "FD_OPEN")
+			}
+			for _, r := range removed {
+				collectData(r, ts, "FD_CLOSE")
+			}
+
+			existing = latest
+
+		}
+
+		time.Sleep(100 * time.Millisecond)
+
+	}
 
 }
 
@@ -74,15 +71,32 @@ func StartProcFSEngine() {
 // opened by a process
 func collectData(pathe string, ts string, evttype string) {
 
+	// TODO cleanup this function
+	// and the functions it calls
+	substrings := strings.Split(pathe, "/")
 
-	subs := strings.Split(pathe, "/")
-	
-	data := map[string]string{"pid": subs[2], "fd": subs[4]}
+	pid := substrings[2]
+	fileDesc := substrings[4]
+
+	data := map[string]string{"pid": pid, "fd": fileDesc}
 
 	// If File descriptor is being opened, gather
 	// info on the event
 	//
 	if evttype == "FD_OPEN" {
+
+    		i, _ := strconv.Atoi("1")
+
+    		pro, err := process.NewProcess(int32(i))
+    		if err != nil {
+        		panic(err)
+    		}
+
+    		cmd, _ := pro.Cmdline()
+    		create, _ := pro.CreateTime()
+
+		data["cmdline"] = cmd
+		data["start_time"] = strconv.FormatInt(create, 10)
 		data["path"], data["type"] = readFD(pathe)
 	}
 
@@ -91,38 +105,35 @@ func collectData(pathe string, ts string, evttype string) {
 
 }
 
-
 func differ(oldest []string, newest []string) ([]string, []string) {
 
-        added   := []string{}
-        removed := []string{}
-        m := map[string]int{}
-
+	added := []string{}
+	removed := []string{}
+	m := map[string]int{}
 
 	// Convert the slive to a Map
 	// for easier comparison
 	//
-        for _, orig := range oldest {
-                m[orig] = 1
-        }
+	for _, orig := range oldest {
+		m[orig] = 1
+	}
 
-        for _, add := range newest {
-                m[add] = m[add] + 2
-        }
+	for _, add := range newest {
+		m[add] = m[add] + 2
+	}
 
-        for k, v := range m {
-                if v==1 {
-                        removed = append(removed, k)
-                } else if v==2 {
-                        added = append(added, k)
-                }
+	for k, v := range m {
+		if v == 1 {
+			removed = append(removed, k)
+		} else if v == 2 {
+			added = append(added, k)
+		}
 
-        }
+	}
 
-        return added, removed
+	return added, removed
 
 }
-
 
 func readFD(fileDesc string) (string, string) {
 
@@ -141,6 +152,7 @@ func readFD(fileDesc string) (string, string) {
 	return link, typ
 
 }
+
 
 // Return the File type
 func linkType(fileDesc string) string {
