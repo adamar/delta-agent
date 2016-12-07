@@ -9,11 +9,13 @@ func StartLogStreamEngine() {
 
 	j, err := sdjournal.NewJournal()
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		return
 	}
 	err = j.SeekTail()
 	if err != nil {
-		panic(err)
+		log.Println(err)
+		return
 	}
 	for {
 		n, _ := j.Next()
