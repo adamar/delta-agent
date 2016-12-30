@@ -1,0 +1,111 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "HbxGoUJAPepglbQFqsYDxwdApxs=",
+			"path": "github.com/adamar/delta-server/models",
+			"revision": "fd0fa65106a8dbb4b0a031125f91211d6c38ef3f",
+			"revisionTime": "2016-12-07T12:52:06Z"
+		},
+		{
+			"checksumSHA1": "iUzC0HRLcL0Iv8FzWzVySRdiCVA=",
+			"path": "github.com/boltdb/bolt",
+			"revision": "074dffcc83e9f421e261526d297cd93f22a34080",
+			"revisionTime": "2016-10-08T15:24:23Z"
+		},
+		{
+			"checksumSHA1": "KiKNmXDG5YbAsPOPK/U8lYn/KgQ=",
+			"path": "github.com/coreos/go-systemd/sdjournal",
+			"revision": "2c9a2f6e703caf3523f0e5783af22855c3159413",
+			"revisionTime": "2016-10-17T21:30:36Z"
+		},
+		{
+			"checksumSHA1": "O8c/VKtW34XPJNNlyeb/im8vWSI=",
+			"path": "github.com/coreos/pkg/dlopen",
+			"revision": "3ac0863d7acf3bc44daf49afef8919af12f704ef",
+			"revisionTime": "2016-07-27T23:37:14Z"
+		},
+		{
+			"checksumSHA1": "twDt9Ldw5++A0adzZq/uxLWdYdk=",
+			"path": "github.com/cskr/pubsub",
+			"revision": "308ca2a9d8371528b36017db3c7eb669b34d9736",
+			"revisionTime": "2016-07-02T04:46:16Z"
+		},
+		{
+			"checksumSHA1": "QBi4eJJ8NKT+WL8VsuRcbILZ2R0=",
+			"origin": "github.com/mozilla/libaudit-go/vendor/github.com/lunixbochs/struc",
+			"path": "github.com/lunixbochs/struc",
+			"revision": "5deb548d1d712ee8534da14a48547f789d5cb892",
+			"revisionTime": "2016-09-09T17:38:56Z"
+		},
+		{
+			"checksumSHA1": "tL4d7ZiLOdPd7f7h/1XSJCTpYP8=",
+			"path": "github.com/mozilla/libaudit-go",
+			"revision": "5deb548d1d712ee8534da14a48547f789d5cb892",
+			"revisionTime": "2016-09-09T17:38:56Z"
+		},
+		{
+			"checksumSHA1": "HsxxCp7Tb8OY+/FK9m6IRgqye+Y=",
+			"path": "github.com/mozilla/libaudit-go/headers",
+			"revision": "5deb548d1d712ee8534da14a48547f789d5cb892",
+			"revisionTime": "2016-09-09T17:38:56Z"
+		},
+		{
+			"checksumSHA1": "gcLub3oB+u4QrOJZcYmk/y2AP4k=",
+			"path": "github.com/nu7hatch/gouuid",
+			"revision": "179d4d0c4d8d407a32af483c2354df1d2c91e6c3",
+			"revisionTime": "2013-12-21T20:05:32Z"
+		},
+		{
+			"checksumSHA1": "IXRJ6ZFNnPzCha1jnijDcUzWZFE=",
+			"origin": "github.com/mozilla/libaudit-go/vendor/github.com/pkg/errors",
+			"path": "github.com/pkg/errors",
+			"revision": "5deb548d1d712ee8534da14a48547f789d5cb892",
+			"revisionTime": "2016-09-09T17:38:56Z"
+		},
+		{
+			"checksumSHA1": "ujFjoR6H3TDeiuY9kvvwSwBMcJk=",
+			"path": "github.com/shirou/gopsutil/cpu",
+			"revision": "061b699a971e0f74834f69ef8b78643f48980d10",
+			"revisionTime": "2016-11-25T00:04:14Z"
+		},
+		{
+			"checksumSHA1": "A5OQcD4rTEhWAfWvp6lzFBA9lfs=",
+			"path": "github.com/shirou/gopsutil/host",
+			"revision": "061b699a971e0f74834f69ef8b78643f48980d10",
+			"revisionTime": "2016-11-25T00:04:14Z"
+		},
+		{
+			"checksumSHA1": "sNAWEDfrq5thpuxsiTvRNJ1fii0=",
+			"path": "github.com/shirou/gopsutil/internal/common",
+			"revision": "061b699a971e0f74834f69ef8b78643f48980d10",
+			"revisionTime": "2016-11-25T00:04:14Z"
+		},
+		{
+			"checksumSHA1": "sOBIj+eocRSO0xtX8vkJDZKTDl8=",
+			"path": "github.com/shirou/gopsutil/mem",
+			"revision": "061b699a971e0f74834f69ef8b78643f48980d10",
+			"revisionTime": "2016-11-25T00:04:14Z"
+		},
+		{
+			"checksumSHA1": "DWrRDbT4hDhy1oiYM0My7UJv+Zc=",
+			"path": "github.com/shirou/gopsutil/net",
+			"revision": "061b699a971e0f74834f69ef8b78643f48980d10",
+			"revisionTime": "2016-11-25T00:04:14Z"
+		},
+		{
+			"checksumSHA1": "+4bS/41wTuGe0oczEwrBCWp6YO8=",
+			"path": "github.com/shirou/gopsutil/process",
+			"revision": "061b699a971e0f74834f69ef8b78643f48980d10",
+			"revisionTime": "2016-11-25T00:04:14Z"
+		},
+		{
+			"checksumSHA1": "+3DSLmsd2v3m5y2T0Z5a5QgT/a8=",
+			"path": "github.com/valyala/gorpc",
+			"revision": "908281bef77441f2d0ec1792189b4032a1dace0c",
+			"revisionTime": "2016-05-19T17:16:14Z"
+		}
+	],
+	"rootPath": "github.com/adamar/delta-agent"
+}
