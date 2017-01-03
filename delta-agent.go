@@ -5,15 +5,15 @@ import (
 	"log"
 	"os"
 
-	"github.com/adamar/delta-server/models"
 	"github.com/adamar/delta-agent/delta"
+	"github.com/adamar/delta-server/models"
 	"github.com/cskr/pubsub"
 )
 
 func main() {
 
-	gob.Register(models.Response{})
-	gob.Register(models.Event{})
+	gob.RegisterName("Response", models.Response{})
+	gob.RegisterName("Event", models.Event{})
 
 	models.PubSub = pubsub.New(20)
 
