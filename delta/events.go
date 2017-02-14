@@ -20,6 +20,14 @@ type Rule struct {
     Query       string `json:"query"`
 }
 
+func parseRules() {
+    raw, _ := ioutil.ReadFile("./rules.json")
+    keys := make([]Rule,0)
+    json.Unmarshal(raw, &keys)
+    fmt.Printf("%#v", keys)
+}
+
+
 func ParseEvents(blerg <-chan interface{})  {
 
         for {
