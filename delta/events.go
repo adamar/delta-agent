@@ -6,6 +6,7 @@ import (
     "fmt"
     "encoding/json"
     "io/ioutil"
+    "github.com/elgs/jsonql"
 )
 
 
@@ -41,6 +42,14 @@ func ParseEvents(blerg <-chan interface{})  {
 
 }
 
+func matchEvent(msgType string, msg string) {
 
+    fmt.Println(msgType)
+    parser, err := jsonql.NewStringQuery(msg)
+    if err != nil {
+        fmt.Println(err)
+    }
+    fmt.Println(parser.Query("exe='/usr/bin/su' || exe='/usr/bin/sudo'"))
 
+}
 
