@@ -33,6 +33,12 @@
 			"revisionTime": "2016-07-02T04:46:16Z"
 		},
 		{
+			"checksumSHA1": "Nob3kwBt5l7dRzKvwJTIDcHhuxY=",
+			"path": "github.com/elgs/jsonql",
+			"revision": "7146bdb05a1e395106204d45100e4d19eed3b62c",
+			"revisionTime": "2016-06-20T19:23:57Z"
+		},
+		{
 			"checksumSHA1": "QBi4eJJ8NKT+WL8VsuRcbILZ2R0=",
 			"origin": "github.com/mozilla/libaudit-go/vendor/github.com/lunixbochs/struc",
 			"path": "github.com/lunixbochs/struc",
