@@ -30,6 +30,8 @@ func main() {
 
 	events := models.PubSub.Sub("SystemCall", "Exec", "PathChange", "ConfigChange", "SystemEvent")
 
+	delta.ParseRules()
+
 	go delta.ParseEvents(events)
 
 	for {
