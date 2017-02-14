@@ -4,8 +4,21 @@ package delta
 import (
     "github.com/adamar/delta-server/models"
     "fmt"
+    "encoding/json"
+    "io/ioutil"
 )
 
+
+type Rules struct {
+    Ruleset []Rule
+}
+
+
+type Rule struct {
+    Name        string `json:"name"`
+    Channel     string `json:"channel"`
+    Query       string `json:"query"`
+}
 
 func ParseEvents(blerg <-chan interface{})  {
 
@@ -19,6 +32,7 @@ func ParseEvents(blerg <-chan interface{})  {
         }
 
 }
+
 
 
 
