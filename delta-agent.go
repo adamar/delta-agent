@@ -28,6 +28,10 @@ func main() {
 
 	inbound := models.PubSub.Sub("SystemCall", "Exec", "PathChange", "ConfigChange", "SystemEvent", "LogEvent", "ProcFS")
 
+	events := models.PubSub.Sub("SystemCall", "Exec", "PathChange", "ConfigChange", "SystemEvent")
+
+	go delta.ParseEvents(events)
+
 	for {
 
 		select {
