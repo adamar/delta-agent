@@ -4,6 +4,32 @@
     "buffer": "16348",
     "rate": "500",
 	"strict_path_check": false,
-    "file_rules": [],
-    "syscall_rules": []
+    "file_rules": [
+	{
+            "path": "/etc/",
+            "key": "files",
+            "permission": "wa"
+        }],
+    "syscall_rules": [
+        {
+            "key": "exec",
+            "syscalls": [
+                "execve"
+            ],
+            "actions": [
+                "exit",
+                "always"
+            ]
+        },
+        {
+            "key": "connect",
+            "syscalls": [
+                "connect"
+            ],
+            "actions": [
+                "exit",
+                "always"
+            ]
+        }
+	]
 }

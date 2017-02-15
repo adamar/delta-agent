@@ -1,4 +1,6 @@
 [
   {"name": "Alert on Sudo or Su","channel": "Audisp", "query":"exe='/usr/bin/su' || exe='/usr/bin/sudo'"},
-  {"name": "Alert on CronD","channel": "CRED_DISP", "query":"exe='/usr/sbin/crond'"}
+  {"name": "Alert on CronD","channel": "CRED_DISP", "query":"exe='/usr/sbin/crond'"},
+  {"name": "Alert on Connect","channel": "Syscall", "query":"syscall='connect'"},
+  {"name": "Alert on ETC", "channel": "", "query":"key='files'"}
 ]
