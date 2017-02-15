@@ -100,7 +100,7 @@ func collectData(pathe string, ts string, evttype string) {
 		data["path"], data["type"] = readFD(pathe)
 	}
 
-	event := BuildEvent(ts, evttype, ts, data)
+	event := BuildEvent(ts, ts, evttype, data)
 	event.PublishEvent("ProcFS")
 
 }

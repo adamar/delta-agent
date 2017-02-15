@@ -10,7 +10,7 @@ import (
 
 
 
-func BuildEvent(serial string, msgType string, native string, data map[string]string) *models.Event {
+func BuildEvent(serial string, native string, msgType string, data map[string]string) *models.Event {
 
     var uuid, err = GenUuid()
     if err != nil {

@@ -31,10 +31,10 @@ func StartLogStreamEngine() {
 		} else {
 
 			if _, ok := m.Fields["_SOURCE_REALTIME_TIMESTAMP"]; ok {
-				event := BuildEvent(m.Fields["_SOURCE_REALTIME_TIMESTAMP"], "LOG_EVENT", m.Fields["_SOURCE_REALTIME_TIMESTAMP"], m.Fields)
+				event := BuildEvent(m.Fields["_SOURCE_REALTIME_TIMESTAMP"], m.Fields["_SOURCE_REALTIME_TIMESTAMP"], "LOG_EVENT", m.Fields)
 				event.PublishEvent("LogEvent")
 			} else {
-				event := BuildEvent(m.Fields["_SOURCE_MONOTONIC_TIMESTAMP"], "LOG_EVENT", m.Fields["_SOURCE_MONOTONIC_TIMESTAMP"], m.Fields)
+				event := BuildEvent(m.Fields["_SOURCE_MONOTONIC_TIMESTAMP"], m.Fields["_SOURCE_MONOTONIC_TIMESTAMP"], "LOG_EVENT", m.Fields)
 				event.PublishEvent("LogEvent")
 			}
 

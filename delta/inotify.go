@@ -22,7 +22,7 @@ func StartiNotifyEngine() {
 		watcher.Watch(loc)
 	}
 
-        //event := BuildEvent(msg.Serial, msg.Type, msg.Timestamp, msg.Data)
+        //event := BuildEvent(msg.Serial, msg.Timestamp, msg.Type, msg.Data)
         //event.PublishEvent("SystemCall")
 
 	for {
