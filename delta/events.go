@@ -10,10 +10,6 @@ import (
 )
 
 
-type Rules struct {
-    Ruleset []Rule
-}
-
 
 type Rule struct {
     Name        string `json:"name"`
@@ -21,35 +17,43 @@ type Rule struct {
     Query       string `json:"query"`
 }
 
-func ParseRules() {
+func ParseRules() []Rule {
     raw, _ := ioutil.ReadFile("./conf.d/rules.json")
     keys := make([]Rule,0)
     json.Unmarshal(raw, &keys)
-    fmt.Printf("%#v", keys)
+    //fmt.Printf("%#v", keys)
+    return keys
 }
 
 
 func ParseEvents(blerg <-chan interface{})  {
 
+	rules := ParseRules()
+
         for {
                 select {
                 case in := <-blerg:
                         var jj = in.(*models.Event)
-                        fmt.Println(jj.Data)
-                        fmt.Println(jj.EventType)
+			matchEvent(jj.EventType, jj.Data, rules)
                 }
         }
 
 }
 
-func matchEvent(msgType string, msg string) {
-
-    fmt.Println(msgType)
-    parser, err := jsonql.NewStringQuery(msg)
-    if err != nil {
-        fmt.Println(err)
+func matchEvent(msgType string, msg string, ruleset []Rule) {
+    
+    for _, r := range ruleset {
+        //fmt.Println(msgType)
+        parser, err := jsonql.NewStringQuery(msg)
+        if err != nil {
+            fmt.Println(err)
+        }
+        ret, _ := parser.Query(r.Query)
+	if ret != nil {
+        	fmt.Println("FOUND event matching in rule", r.Query, " with event ", msg)
+	}
     }
-    fmt.Println(parser.Query("exe='/usr/bin/su' || exe='/usr/bin/sudo'"))
+
 
 }
 
