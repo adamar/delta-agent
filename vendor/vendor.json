@@ -71,6 +71,12 @@
 			"revisionTime": "2016-09-09T17:38:56Z"
 		},
 		{
+			"checksumSHA1": "z/S6lZVNplAZJ97MfMG/jEwFFkY=",
+			"path": "github.com/scyth/go-webproject/gwp/libs/inotify",
+			"revision": "5fa3fe51abda959744e4e6122b218ad559ef455a",
+			"revisionTime": "2012-07-04T23:51:37Z"
+		},
+		{
 			"checksumSHA1": "ujFjoR6H3TDeiuY9kvvwSwBMcJk=",
 			"path": "github.com/shirou/gopsutil/cpu",
 			"revision": "061b699a971e0f74834f69ef8b78643f48980d10",
