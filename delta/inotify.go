@@ -1,7 +1,7 @@
 
 package delta
 
-impodelta
+import (
     "github.com/scyth/go-webproject/gwp/libs/inotify"
     "log"
 )
@@ -16,17 +16,14 @@ func StartiNotifyEngine() {
     		log.Fatal(err)
 	}
 
-	watcher.Watch("/boot")
-	watcher.Watch("/dev")
-	watcher.Watch("/etc")
-	watcher.Watch("/lib")
-	watcher.Watch("/lib64")
-	watcher.Watch("/proc")
-	watcher.Watch("/usr")
-	watcher.Watch("/root")
-	watcher.Watch("/usr")
+	locs := []string{"/boot", "/dev", "/etc", "/lib", "/lib64", "/proc", "/usr", "/root", "/usr", "/home"}	
 
+	for _, loc := range locs {
+		watcher.Watch(loc)
+	}
 
+        //event := BuildEvent(msg.Serial, msg.Type, msg.Timestamp, msg.Data)
+        //event.PublishEvent("SystemCall")
 
 	for {
     		select {

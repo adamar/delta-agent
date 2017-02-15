@@ -25,6 +25,7 @@ func main() {
 	go delta.StartAuditEngine()
 	go delta.StartLogStreamEngine()
 	go delta.StartProcFSEngine()
+        go delta.StartiNotifyEngine()
 
 	inbound := models.PubSub.Sub("SystemCall", "Exec", "PathChange", "ConfigChange", "SystemEvent", "LogEvent", "ProcFS")
 
