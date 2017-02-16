@@ -97,6 +97,7 @@ func callback(msg *libaudit.AuditEvent, ce error, args ...interface{}) {
 
 		switch {
 		case msg.Type == "SYSCALL":
+			//genKeyName("SystemCall", msgTyp) string
 			event.PublishEvent("SystemCall")
 
 		case msg.Type == "EXECVE":
