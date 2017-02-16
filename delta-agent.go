@@ -27,7 +27,8 @@ func main() {
 	go delta.StartProcFSEngine()
         go delta.StartiNotifyEngine()
 
-	inbound := models.PubSub.Sub("SystemCall", "Exec", "PathChange", "ConfigChange", "SystemEvent", "LogEvent", "ProcFS")
+	//inbound := models.PubSub.Sub("SystemCall", "Exec", "PathChange", "ConfigChange", "SystemEvent", "LogEvent", "ProcFS", delta.InotifyChannel)
+	inbound := models.PubSub.Sub(delta.InotifyChannel)
 
 	events := models.PubSub.Sub("SystemCall", "Exec", "PathChange", "ConfigChange", "SystemEvent")
 
@@ -38,6 +39,7 @@ func main() {
 		select {
 		case in := <-inbound:
 			_, err := rpc.Call(in)
+			log.Println(in)
 			if err != nil {
 				log.Fatalf("Error when sending request to server: %s", err)
 			}

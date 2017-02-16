@@ -6,7 +6,7 @@ import (
     "log"
 )
 
-
+var InotifyChannel = "inotify"
 
 func StartiNotifyEngine() {
 
@@ -22,23 +22,39 @@ func StartiNotifyEngine() {
 		watcher.Watch(loc)
 	}
 
-        //event := BuildEvent(msg.Serial, msg.Timestamp, msg.Type, msg.Data)
-        //event.PublishEvent("SystemCall")
-
+        key := genKeyName(InotifyChannel, "event")
+ 
 	for {
     		select {
     		case ev := <-watcher.Event:
+
+		ts := GenTimeStamp()
+
     		switch ev.Mask {
     		case 2:
-        		log.Println("File Modified: ", ev.Name)
+			data := map[string]string{"file": ev.Name, "action": "file modified"}
+        		event := BuildEvent(ts, ts, key, data)
+        		event.PublishEvent(InotifyChannel)
+
     		case 4:
-        		log.Println("File Attributes Changed: ", ev.Name)
+			data := map[string]string{"file": ev.Name, "action": "file attributes modified"}
+        		event := BuildEvent(ts, ts, key, data)
+        		event.PublishEvent(InotifyChannel)
+
     		case 100:
-        		log.Println("File created: ", ev.Name)
+			data := map[string]string{"file": ev.Name, "action": "file created"}
+        		event := BuildEvent(ts, ts, key, data)
+        		event.PublishEvent(InotifyChannel)
+
     		case 200, 400:
-        		log.Println("File Deleted", ev.Name)
+			data := map[string]string{"file": ev.Name, "action": "file deleted"}
+        		event := BuildEvent(ts, ts, key, data)
+        		event.PublishEvent(InotifyChannel)
+
     		case 512:
-        		log.Println("File Deleted? ", ev.Name)
+			data := map[string]string{"file": ev.Name, "action": "file deleted"}
+        		event := BuildEvent(ts, ts, key, data)
+        		event.PublishEvent(InotifyChannel)
 
     			}
 
