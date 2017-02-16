@@ -13,6 +13,8 @@ import (
 	"github.com/shirou/gopsutil/process"
 )
 
+var ProcfsChannel = "procfs"
+
 func StartProcFSEngine() {
 
 	// Wait for initla File Descriptors to be opened
@@ -100,8 +102,9 @@ func collectData(pathe string, ts string, evttype string) {
 		data["path"], data["type"] = readFD(pathe)
 	}
 
-	event := BuildEvent(ts, ts, evttype, data)
-	event.PublishEvent("ProcFS")
+	key := genKeyName(ProcfsChannel, evttype)
+	event := BuildEvent(ts, ts, key, data)
+	event.PublishEvent(ProcfsChannel)
 
 }
 

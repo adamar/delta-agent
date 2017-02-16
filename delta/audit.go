@@ -10,6 +10,8 @@ import (
 
 var PubSub *pubsub.PubSub
 
+var AuditChannel = "audit"
+
 func StartAuditEngine() {
 
 	s, err := libaudit.NewNetlinkConnection()
@@ -93,26 +95,9 @@ func callback(msg *libaudit.AuditEvent, ce error, args ...interface{}) {
 		fmt.Printf("%v\n", ce)
 	} else if msg != nil {
 
-		event := BuildEvent(msg.Serial, msg.Timestamp, msg.Type, msg.Data)
-
-		switch {
-		case msg.Type == "SYSCALL":
-			//genKeyName("SystemCall", msgTyp) string
-			event.PublishEvent("SystemCall")
-
-		case msg.Type == "EXECVE":
-			event.PublishEvent("SystemCall")
-
-		case msg.Type == "PATH":
-			event.PublishEvent("SystemCall")
-
-		case msg.Type == "CONFIG_CHANGE":
-			event.PublishEvent("SystemCall")
-
-		default:
-			event.PublishEvent("SystemCall")
-
-		}
+		key := genKeyName(AuditChannel, msg.Type)
+		event := BuildEvent(msg.Serial, msg.Timestamp, key, msg.Data)
+		event.PublishEvent(AuditChannel)
 
 	}
 }

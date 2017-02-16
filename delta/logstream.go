@@ -5,6 +5,8 @@ import (
 	"log"
 )
 
+var LogChannel = "logstream"
+
 func StartLogStreamEngine() {
 
 	j, err := sdjournal.NewJournal()
@@ -30,12 +32,20 @@ func StartLogStreamEngine() {
 			log.Printf("Error: " + err.Error())
 		} else {
 
+			key := genKeyName(LogChannel, "log_event")
+
 			if _, ok := m.Fields["_SOURCE_REALTIME_TIMESTAMP"]; ok {
-				event := BuildEvent(m.Fields["_SOURCE_REALTIME_TIMESTAMP"], m.Fields["_SOURCE_REALTIME_TIMESTAMP"], "LOG_EVENT", m.Fields)
-				event.PublishEvent("LogEvent")
+				event := BuildEvent(m.Fields["_SOURCE_REALTIME_TIMESTAMP"], 
+                                                    m.Fields["_SOURCE_REALTIME_TIMESTAMP"], 
+                                                    key, 
+                                                    m.Fields)
+				event.PublishEvent(LogChannel)
 			} else {
-				event := BuildEvent(m.Fields["_SOURCE_MONOTONIC_TIMESTAMP"], m.Fields["_SOURCE_MONOTONIC_TIMESTAMP"], "LOG_EVENT", m.Fields)
-				event.PublishEvent("LogEvent")
+				event := BuildEvent(m.Fields["_SOURCE_MONOTONIC_TIMESTAMP"], 
+                                                    m.Fields["_SOURCE_MONOTONIC_TIMESTAMP"], 
+                                                    key, 
+                                                    m.Fields)
+				event.PublishEvent(LogChannel)
 			}
 
 		}
