@@ -22,17 +22,16 @@ func main() {
 	}
 
 	rpc := delta.NewRPClient()
-	go delta.StartAuditEngine()
+	//go delta.StartAuditEngine()
 	go delta.StartLogStreamEngine()
 	go delta.StartProcFSEngine()
         go delta.StartiNotifyEngine()
 
-	//inbound := models.PubSub.Sub("SystemCall", "Exec", "PathChange", "ConfigChange", "SystemEvent", "LogEvent", "ProcFS", delta.InotifyChannel)
-	inbound := models.PubSub.Sub(delta.InotifyChannel)
+	inbound := models.PubSub.Sub(delta.InotifyChannel, delta.ProcfsChannel, delta.LogChannel)
 
-	events := models.PubSub.Sub("SystemCall", "Exec", "PathChange", "ConfigChange", "SystemEvent")
+	//events := models.PubSub.Sub("SystemCall", "Exec", "PathChange", "ConfigChange", "SystemEvent")
 
-	go delta.ParseEvents(events)
+	//go delta.ParseEvents(events)
 
 	for {
 
