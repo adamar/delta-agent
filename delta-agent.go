@@ -1,9 +1,8 @@
 package main
 
 import (
-	"encoding/gob"
+	//"encoding/gob"
 	"log"
-	"os"
 
 	"github.com/adamar/delta-agent/delta"
 	"github.com/adamar/delta-server/models"
@@ -12,17 +11,12 @@ import (
 
 func main() {
 
-	gob.RegisterName("Response", models.Response{})
-	gob.RegisterName("Event", models.Event{})
+	delta.Start()
 
 	models.PubSub = pubsub.New(20)
 
-	if delta.PassedPreflighChecks() != true {
-		os.Exit(1)
-	}
-
 	rpc := delta.NewRPClient()
-	//go delta.StartAuditEngine()
+	go delta.StartAuditEngine()
 	go delta.StartLogStreamEngine()
 	go delta.StartProcFSEngine()
         go delta.StartiNotifyEngine()

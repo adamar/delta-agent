@@ -3,7 +3,9 @@ package delta
 
 import (
 	"os/user"
+	"encoding/gob"
 	"github.com/cskr/pubsub"
+	"github.com/adamar/delta-server/models"
 )
 
 type DeltaCore struct {
@@ -18,22 +20,26 @@ func Start() (*DeltaCore, error) {
 	if err != nil {
 		return nil, err
 	}
+
+        gob.RegisterName("Response", models.Response{})
+        gob.RegisterName("Event", models.Event{})
+
 	return dc, nil
 
 }
 
 	
-func (dc *DeltaCore) PreflightChecks() bool {
+func (dc *DeltaCore) PreflightChecks() error {
 
         user, err := user.Current()
         if err != nil {
-                return false
+                return err
         }
 
         if user.Uid != "0" {
-                return false
+                return nil
         }
 
-        return true
+        return nil
 
 }
