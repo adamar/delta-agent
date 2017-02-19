@@ -4,7 +4,6 @@ package delta
 import (
 	"io/ioutil"
 	"encoding/json"
-	"os/user"
 	)
 
 
@@ -37,20 +36,6 @@ func LoadTriggers() *Triggers {
 }
 
 
-func PassedPreflighChecks() bool {
-
-	user, err := user.Current()
-	if err != nil {
-		return false
-	}
-
-	if user.Uid != "0" {
-		return false
-	}
-
-	return true
-
-}
 
 
 
