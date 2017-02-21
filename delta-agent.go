@@ -15,11 +15,11 @@ func main() {
 	
 	models.PubSub = pubsub.New(20)
 
-	inbound := models.PubSub.Sub(delta.InotifyChannel, delta.ProcfsChannel, delta.LogChannel)
+	inbound := models.PubSub.Sub(delta.AuditChannel, delta.InotifyChannel, delta.ProcfsChannel, delta.LogChannel)
 
 	//events := models.PubSub.Sub("SystemCall", "Exec", "PathChange", "ConfigChange", "SystemEvent")
 
-	//go delta.ParseEvents(events)
+	go delta.ParseEvents(inbound)
 
 	for {
 

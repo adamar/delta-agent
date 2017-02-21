@@ -4,13 +4,12 @@ package delta
 import (
 	"os/user"
 	"encoding/gob"
-	"github.com/cskr/pubsub"
+	//"github.com/cskr/pubsub"
 	"github.com/adamar/delta-server/models"
 	"github.com/valyala/gorpc"
 )
 
 type DeltaCore struct {
-	Pubsub	pubsub.PubSub
 	Rpc     *gorpc.Client
 }
 
@@ -29,6 +28,9 @@ func Start() (*DeltaCore, error) {
 	dc.NewRPClient()
 
 	go dc.StartAuditEngine()
+	go dc.StartProcFSEngine()
+	go dc.StartiNotifyEngine()
+	go dc.StartLogStreamEngine()
 
 	return dc, nil
 
