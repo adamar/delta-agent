@@ -15,7 +15,7 @@ import (
 
 var ProcfsChannel = "procfs"
 
-func StartProcFSEngine() {
+func (dc *DeltaCore) StartProcFSEngine() {
 
 	// Wait for initla File Descriptors to be opened
 	// before monitoring begins

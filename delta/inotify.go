@@ -8,7 +8,7 @@ import (
 
 var InotifyChannel = "inotify"
 
-func StartiNotifyEngine() {
+func (dc *DeltaCore) StartiNotifyEngine() {
 
 
 	watcher, err := inotify.NewWatcher()

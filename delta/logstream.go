@@ -7,7 +7,7 @@ import (
 
 var LogChannel = "logstream"
 
-func StartLogStreamEngine() {
+func (dc *DeltaCore) StartLogStreamEngine() {
 
 	j, err := sdjournal.NewJournal()
 	if err != nil {
