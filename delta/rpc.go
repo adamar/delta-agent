@@ -4,21 +4,22 @@ import (
 	"github.com/valyala/gorpc"
 	"time"
 	"os"
+	"log"
 )
 
-func NewRPClient() *gorpc.Client {
+func (dc *DeltaCore) NewRPClient() {
 
-	server_url := os.Getenv("SERVER")
+	server_url := os.Getenv("DELTA_SERVER")
         if server_url == "" {
                 server_url = "127.0.0.1:12345"
         }	
 
-	c := &gorpc.Client{
+	log.Println("Connecting to: ", server_url)
+
+	dc.Rpc = &gorpc.Client{
 		Addr:           server_url,
 		RequestTimeout: 90000 * time.Second,
 	}
-	c.Start()
-
-	return c
+	dc.Rpc.Start()
 
 }

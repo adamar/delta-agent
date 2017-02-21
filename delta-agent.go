@@ -11,15 +11,9 @@ import (
 
 func main() {
 
-	delta.Start()
-
+	DC, _ := delta.Start()
+	
 	models.PubSub = pubsub.New(20)
-
-	rpc := delta.NewRPClient()
-	go delta.StartAuditEngine()
-	go delta.StartLogStreamEngine()
-	go delta.StartProcFSEngine()
-        go delta.StartiNotifyEngine()
 
 	inbound := models.PubSub.Sub(delta.InotifyChannel, delta.ProcfsChannel, delta.LogChannel)
 
@@ -31,8 +25,8 @@ func main() {
 
 		select {
 		case in := <-inbound:
-			_, err := rpc.Call(in)
-			log.Println(in)
+			_, err := DC.Rpc.Call(in)
+			log.Println("RPC Error: " , in)
 			if err != nil {
 				log.Fatalf("Error when sending request to server: %s", err)
 			}

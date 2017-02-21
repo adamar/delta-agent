@@ -6,10 +6,12 @@ import (
 	"encoding/gob"
 	"github.com/cskr/pubsub"
 	"github.com/adamar/delta-server/models"
+	"github.com/valyala/gorpc"
 )
 
 type DeltaCore struct {
-	pubsub	pubsub.PubSub
+	Pubsub	pubsub.PubSub
+	Rpc     *gorpc.Client
 }
 
 
@@ -23,6 +25,10 @@ func Start() (*DeltaCore, error) {
 
         gob.RegisterName("Response", models.Response{})
         gob.RegisterName("Event", models.Event{})
+
+	dc.NewRPClient()
+
+	go dc.StartAuditEngine()
 
 	return dc, nil
 
