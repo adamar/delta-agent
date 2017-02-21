@@ -12,7 +12,7 @@ var PubSub *pubsub.PubSub
 
 var AuditChannel = "audit"
 
-func StartAuditEngine() {
+func (dc *DeltaCore) StartAuditEngine() {
 
 	s, err := libaudit.NewNetlinkConnection()
 	if err != nil {
