@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/cskr/pubsub"
 	"github.com/mozilla/libaudit-go"
-	"io/ioutil"
 	"syscall"
 )
 
@@ -71,8 +70,9 @@ func (dc *DeltaCore) StartAuditEngine() {
 
 	// set audit rules
 	// specify rules in JSON format (for example see: https://github.com/arunk-s/gsoc16/blob/master/audit.rules.json)
-	out, _ := ioutil.ReadFile("conf.d/audit.rules.json")
-	err = libaudit.SetRules(s, out)
+	//out, _ := ioutil.ReadFile("conf.d/audit.rules.json")
+	rulesJson := []byte(auditConfig)
+	err = libaudit.SetRules(s, rulesJson)
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return
@@ -101,3 +101,43 @@ func callback(msg *libaudit.AuditEvent, ce error, args ...interface{}) {
 
 	}
 }
+
+
+
+
+var auditConfig = `
+{
+    "delete": true,
+    "enable": "1",
+    "buffer": "16348",
+    "rate": "500",
+        "strict_path_check": false,
+    "file_rules": [
+        {
+            "path": "/etc/",
+            "key": "files",
+            "permission": "wa"
+        }],
+    "syscall_rules": [
+        {
+            "key": "exec",
+            "syscalls": [
+                "execve"
+            ],
+            "actions": [
+                "exit",
+                "always"
+            ]
+        },
+        {
+            "key": "connect",
+            "syscalls": [
+                "connect"
+            ],
+            "actions": [
+                "exit",
+                "always"
+            ]
+        }
+        ]
+}`
