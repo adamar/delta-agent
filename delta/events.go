@@ -21,7 +21,6 @@ func ParseRules() []Rule {
     raw, _ := ioutil.ReadFile("./conf.d/rules.json")
     keys := make([]Rule,0)
     json.Unmarshal(raw, &keys)
-    //fmt.Printf("%#v", keys)
     return keys
 }
 
@@ -43,11 +42,10 @@ func ParseEvents(blerg <-chan interface{})  {
 func matchEvent(msgType string, msg string, ruleset []Rule) {
     
     for _, r := range ruleset {
-        //fmt.Println(msgType)
         parser, err := jsonql.NewStringQuery(msg)
         if err != nil {
             fmt.Println(err)
-        }
+      }
         ret, _ := parser.Query(r.Query)
 	if ret != nil {
         	fmt.Println("FOUND event matching in rule", r.Query, " with event ", msg)
